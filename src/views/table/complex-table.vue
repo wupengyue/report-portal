@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
-    <div class="filter-container">
+  
       <el-input v-model="listQuery.title" placeholder="Title" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-select v-model="listQuery.importance" placeholder="Imp" clearable style="width: 90px" class="filter-item">
         <el-option v-for="item in importanceOptions" :key="item" :label="item" :value="item" />
       </el-select>
-      <el-select v-model="listQuery.type" placeholder="Type" clearable class="filter-item" style="width: 130px">
+    <div class="filter-container">    <el-select v-model="listQuery.type" placeholder="Type" clearable class="filter-item" style="width: 130px">
         <el-option v-for="item in calendarTypeOptions" :key="item.key" :label="item.display_name+'('+item.key+')'" :value="item.key" />
       </el-select>
       <el-select v-model="listQuery.sort" style="width: 140px" class="filter-item" @change="handleFilter">
@@ -47,7 +47,9 @@
       </el-table-column>
       <el-table-column label="Title" min-width="150px">
         <template slot-scope="{row}">
-          <router-link :to="'/example/edit/'+row.id" class="link-type">
+          <!-- http://localhost:9528/#/charts/line -->
+          <!-- <router-link :to="'/example/edit/'+row.id" class="link-type"> -->
+          <router-link :to="'/charts/line'" class="link-type">
            <el-tag>{{ row.title}}</el-tag>
           </router-link>
         </template>
@@ -80,22 +82,6 @@
           </el-tag>
         </template>
       </el-table-column>
-      <!-- <el-table-column label="Actions" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row,$index}">
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">
-            Edit
-          </el-button>
-          <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
-            Publish
-          </el-button>
-          <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
-            Draft
-          </el-button>
-          <el-button v-if="row.status!='deleted'" size="mini" type="danger" @click="handleDelete(row,$index)">
-            Delete
-          </el-button>
-        </template>
-      </el-table-column> -->
     </el-table>
 
     <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
